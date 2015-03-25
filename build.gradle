@@ -1,0 +1,70 @@
+import java.awt.Desktop
+
+apply plugin: 'groovy'
+apply plugin: 'application'
+
+project.ext {
+  testFailed = ''
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+  // mandatory dependencies for using Spock
+  compile "org.codehaus.groovy:groovy-all:2.4.1"
+  testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+
+  // optional dependencies for using Spock
+  testCompile "org.hamcrest:hamcrest-core:1.3" // only necessary if Hamcrest matchers are used
+  testRuntime "cglib:cglib-nodep:3.1"          // allows mocking of classes (in addition to interfaces)
+  testRuntime "org.objenesis:objenesis:2.1"    // allows mocking of classes without default constructor (together with CGLIB)
+
+}
+
+test {
+
+    testLogging.showStandardStreams = true
+
+    afterTest { desc, result ->
+        if (result.toString() == 'FAILURE') {
+            project.testFailed = "${desc.className}"
+        }
+    }
+}
+
+gradle.taskGraph.afterTask { task, taskState ->
+    if (testTaskFailed(task)) {
+        openFailedTestReportInBrowser(task)
+    }
+}
+
+def openFailedTestReportInBrowser(task) {
+    if (Desktop.isDesktopSupported()) {
+        Desktop.desktop.browse(new File(task.reports.html.destination, "index.html").toURI())
+    }
+}
+
+def testTaskFailed(task) {
+    task instanceof Test && !project.testFailed.isEmpty()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bluepapa32:gradle-watch-plugin:0.1.5'
+    }
+}
+
+apply plugin: 'com.bluepapa32.watch'
+
+watch {
+
+    java {
+        files files('src/main/java')
+        tasks 'compileJava'
+    }
+}
