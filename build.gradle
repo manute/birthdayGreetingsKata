@@ -55,16 +55,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.bluepapa32:gradle-watch-plugin:0.1.5'
+
     }
 }
 
-apply plugin: 'com.bluepapa32.watch'
-
-watch {
-
-    java {
-        files files('src/main/java')
-        tasks 'compileJava'
-    }
-}
