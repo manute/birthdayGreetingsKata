@@ -16,10 +16,10 @@ class EmployeeRepositorySpec extends Specification {
     when: def employees = repository.findAllEmployees()
           def employeeMocked = employees[0]
 
-    then: employeeMocked[0] == "Doe"
-          employeeMocked[1] == "Jhon"
-          employeeMocked[2] == "1982/10/08"
-          employeeMocked[3] == "john.doe@foobar.com"
+    then: employeeMocked.last_name == "Doe"
+          employeeMocked.first_name == "Jhon"
+          employeeMocked.date_of_birth == new Date().parse("yyyy/MM/d", "1982/10/08")
+          employeeMocked.email == "john.doe@foobar.com"
   }
 }
 

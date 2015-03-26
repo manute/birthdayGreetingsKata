@@ -8,4 +8,15 @@ class Employee {
   Date date_of_birth
   String email
 
+  static createFrom(dataAsArray){
+    def birth_day = formatBirthday(dataAsArray[2])
+    new Employee(last_name: dataAsArray[0], first_name: dataAsArray[1],
+                 date_of_birth: birth_day , email: dataAsArray[3])
+  }
+
+
+  private static formatBirthday(dateString) {
+    new Date().parse("yyyy/MM/d", dateString)
+  }
+
 }

@@ -19,4 +19,18 @@ class EmployeeSpec extends Specification {
             employee.email == "dummy@d.es"
 
   }
+
+  def "can create a employee from a data list"(){
+
+    given:
+          def birthDateString = "1982/10/08"
+          def dataEmployee = ["Doe", "Jhon", birthDateString, "john.doe@foobar.com"]
+
+    when: def employee = Employee.createFrom(dataEmployee)
+
+    then: employee.last_name == "Doe"
+          employee.first_name == "Jhon"
+          employee.date_of_birth == new Date().parse("yyyy/MM/d", birthDateString)
+          employee.email == "john.doe@foobar.com"
+  }
 }
