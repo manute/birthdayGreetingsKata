@@ -10,8 +10,7 @@ class EmployeeSpec extends Specification {
 
       given: def today = new Date()
 
-      when: def employee = new Employee(last_name: "Norris", first_name: "Chuck",
-                                         date_of_birth: today, email: "dummy@d.es")
+      when: def employee = fixtureEmployeeWith(today)
 
       then: employee.last_name == "Norris"
             employee.first_name == "Chuck"
@@ -32,5 +31,21 @@ class EmployeeSpec extends Specification {
           employee.first_name == "Jhon"
           employee.date_of_birth == new Date().parse("yyyy/MM/d", birthDateString)
           employee.email == "john.doe@foobar.com"
+  }
+
+  def "can know if today is the birthday`s employee"() {
+
+    given: def today = new Date()
+
+    when: def employee = fixtureEmployeeWith(today)
+
+    then: employee.isBirthday() == true
+
+
+  }
+
+  private fixtureEmployeeWith(today) {
+    new Employee(last_name: "Norris", first_name: "Chuck", date_of_birth: today, email: "dummy@d.es")
+
   }
 }

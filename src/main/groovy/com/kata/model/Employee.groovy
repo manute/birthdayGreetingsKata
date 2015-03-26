@@ -14,6 +14,9 @@ class Employee {
                  date_of_birth: birth_day , email: dataAsArray[3])
   }
 
+  def isBirthday() {
+    date_of_birth.clearTime().compareTo(new Date().clearTime()) == 0
+  }
 
   private static formatBirthday(dateString) {
     new Date().parse("yyyy/MM/d", dateString)

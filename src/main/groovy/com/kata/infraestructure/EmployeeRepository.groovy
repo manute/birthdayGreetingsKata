@@ -11,4 +11,8 @@ class EmployeeRepository {
       Employee.createFrom(dataEmployee)
     }
   }
+
+  def findEmployeesTodayBirthday() {
+    findAllEmployees().findAll { it.isBirthday() }
+  }
 }
