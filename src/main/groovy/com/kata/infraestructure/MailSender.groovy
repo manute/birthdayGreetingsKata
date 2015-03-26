@@ -13,8 +13,11 @@ class MailSender {
 
   def send() {
     return notExecuteInTest {
-      genericSend()
+      //To DO
+      //Create conexion , auth, and send mail with a provider
     }
   }
+
+
 
 }
