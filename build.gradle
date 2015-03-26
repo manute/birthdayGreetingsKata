@@ -23,6 +23,8 @@ dependencies {
 
 }
 
+mainClassName = "com.kata.application.ProcessRunner"
+
 test {
 
     testLogging.showStandardStreams = true
